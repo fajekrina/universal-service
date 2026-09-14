@@ -1,0 +1,410 @@
+{
+  "description": "Panel drag-drop registry — contoh nilai (array = pilihan, pilih salah satu). Base structure instance: id, component, parentId, props, style, order. Props Input menyesuaikan type yang dipilih.",
+  "components": {
+    "Container": {
+      "props": {
+        "as": ["div", "section", "article", "aside"]
+      },
+      "style": [
+        "display",
+        "flexDirection",
+        "flexWrap",
+        "justifyContent",
+        "alignItems",
+        "gap",
+        "gridTemplateColumns",
+        "gridGap",
+        "padding",
+        "paddingTop",
+        "paddingRight",
+        "paddingBottom",
+        "paddingLeft",
+        "margin",
+        "marginTop",
+        "marginRight",
+        "marginBottom",
+        "marginLeft",
+        "background",
+        "backgroundColor",
+        "border",
+        "borderColor",
+        "borderWidth",
+        "borderStyle",
+        "borderRadius",
+        "width",
+        "height",
+        "maxWidth",
+        "minHeight",
+        "overflow",
+        "boxShadow"
+      ]
+    },
+    "Text": {
+      "props": {
+        "content": "Selamat datang",
+        "tag": ["p", "span", "label"]
+      },
+      "style": [
+        "color",
+        "fontSize",
+        "fontWeight",
+        "lineHeight",
+        "letterSpacing",
+        "textAlign",
+        "margin",
+        "marginTop",
+        "marginRight",
+        "marginBottom",
+        "marginLeft",
+        "padding",
+        "paddingTop",
+        "paddingRight",
+        "paddingBottom",
+        "paddingLeft",
+        "background",
+        "backgroundColor",
+        "opacity",
+        "maxWidth",
+        "overflow"
+      ]
+    },
+    "Heading": {
+      "props": {
+        "content": "Pilih Kursi",
+        "level": [1, 2, 3, 4, 5, 6]
+      },
+      "style": [
+        "color",
+        "fontSize",
+        "fontWeight",
+        "lineHeight",
+        "letterSpacing",
+        "textAlign",
+        "margin",
+        "marginTop",
+        "marginRight",
+        "marginBottom",
+        "marginLeft",
+        "padding",
+        "background",
+        "backgroundColor",
+        "opacity",
+        "maxWidth"
+      ]
+    },
+    "Button": {
+      "props": {
+        "label": "Kirim",
+        "type": ["button", "reset", "submit"],
+        "disabled": [true, false]
+      },
+      "action": {
+        "behavior": [
+          "navigate",
+          "submit",
+          "openModal",
+          "closeModal",
+          "externalLink",
+          "back",
+          "toast",
+          "customEvent"
+        ]
+      },
+      "style": [
+        "background",
+        "backgroundColor",
+        "color",
+        "border",
+        "borderColor",
+        "borderWidth",
+        "borderStyle",
+        "borderRadius",
+        "padding",
+        "paddingTop",
+        "paddingRight",
+        "paddingBottom",
+        "paddingLeft",
+        "margin",
+        "marginTop",
+        "marginRight",
+        "marginBottom",
+        "marginLeft",
+        "fontSize",
+        "fontWeight",
+        "lineHeight",
+        "textAlign",
+        "width",
+        "height",
+        "display",
+        "justifyContent",
+        "alignItems",
+        "gap",
+        "opacity",
+        "boxShadow",
+        "cursor",
+        "overflow"
+      ]
+    },
+    "Image": {
+      "props": {
+        "src": "/poster.jpg",
+        "alt": "Poster Konser",
+        "loading": "lazy"
+      },
+      "style": [
+        "width",
+        "height",
+        "maxWidth",
+        "maxHeight",
+        "minWidth",
+        "minHeight",
+        "objectFit",
+        "borderRadius",
+        "border",
+        "borderColor",
+        "borderWidth",
+        "borderStyle",
+        "margin",
+        "marginTop",
+        "marginRight",
+        "marginBottom",
+        "marginLeft",
+        "padding",
+        "display",
+        "opacity",
+        "boxShadow",
+        "overflow",
+        "background",
+        "backgroundColor"
+      ]
+    },
+    "Input": {
+      "description": "type = pilihan, atribut lain menyesuaikan type yang dipilih",
+      "variants": {
+        "text": {
+          "props": {
+            "type": "text",
+            "name": "fullName",
+            "label": "Nama Lengkap",
+            "placeholder": "Masukkan nama lengkap",
+            "required": true,
+            "minLength": 8,
+            "maxLength": 50
+          }
+        },
+        "email": {
+          "props": {
+            "type": "email",
+            "name": "email",
+            "label": "Email",
+            "placeholder": "nama@email.com",
+            "required": true,
+            "validation": [{ "rule": "email", "message": "Email tidak valid" }]
+          }
+        },
+        "number": {
+          "props": {
+            "type": "number",
+            "name": "age",
+            "label": "Umur",
+            "placeholder": "17",
+            "required": true,
+            "min": 17,
+            "max": 99
+          }
+        },
+        "tel": {
+          "props": {
+            "type": "tel",
+            "name": "phone",
+            "label": "No HP",
+            "placeholder": "08xxxxxxxxxx",
+            "required": true,
+            "minLength": 10
+          }
+        },
+        "password": {
+          "props": {
+            "type": "password",
+            "name": "password",
+            "label": "Password",
+            "placeholder": "••••••••",
+            "required": true,
+            "minLength": 8
+          }
+        },
+        "date": {
+          "props": {
+            "type": "date",
+            "name": "birthDate",
+            "label": "Tanggal Lahir",
+            "required": false,
+            "min": "2020-01-01",
+            "max": "2030-12-31"
+          }
+        },
+        "checkbox": {
+          "props": {
+            "type": "checkbox",
+            "name": "agree",
+            "label": "Setuju syarat",
+            "required": true
+          }
+        }
+      },
+      "style": [
+        "background",
+        "backgroundColor",
+        "color",
+        "border",
+        "borderColor",
+        "borderWidth",
+        "borderStyle",
+        "borderRadius",
+        "padding",
+        "paddingTop",
+        "paddingRight",
+        "paddingBottom",
+        "paddingLeft",
+        "margin",
+        "marginTop",
+        "marginRight",
+        "marginBottom",
+        "marginLeft",
+        "fontSize",
+        "fontWeight",
+        "lineHeight",
+        "width",
+        "height",
+        "display",
+        "boxShadow",
+        "opacity",
+        "textAlign"
+      ]
+    },
+    "Select": {
+      "props": {
+        "name": "payment_method",
+        "options": [
+          { "value": "card", "label": "Kartu Kredit" },
+          { "value": "bank", "label": "Transfer Bank" },
+          { "value": "ewallet", "label": "E-Wallet" }
+        ],
+        "placeholder": "Pilih metode pembayaran",
+        "required": true
+      },
+      "style": [
+        "background",
+        "backgroundColor",
+        "color",
+        "border",
+        "borderColor",
+        "borderWidth",
+        "borderStyle",
+        "borderRadius",
+        "padding",
+        "margin",
+        "fontSize",
+        "fontWeight",
+        "width",
+        "height",
+        "display",
+        "boxShadow",
+        "opacity",
+        "textAlign"
+      ]
+    },
+    "Textarea": {
+      "props": {
+        "name": "notes",
+        "placeholder": "Catatan tambahan",
+        "rows": 4
+      },
+      "style": [
+        "background",
+        "backgroundColor",
+        "color",
+        "border",
+        "borderColor",
+        "borderWidth",
+        "borderStyle",
+        "borderRadius",
+        "padding",
+        "margin",
+        "fontSize",
+        "fontWeight",
+        "lineHeight",
+        "width",
+        "height",
+        "display",
+        "boxShadow",
+        "opacity",
+        "textAlign",
+        "overflow"
+      ]
+    },
+    "Form": {
+      "props": {
+        "action": "/api/payment",
+        "method": "POST",
+        "enctype": "application/json"
+      },
+      "style": [
+        "display",
+        "flexDirection",
+        "gap",
+        "padding",
+        "paddingTop",
+        "paddingRight",
+        "paddingBottom",
+        "paddingLeft",
+        "margin",
+        "marginTop",
+        "marginRight",
+        "marginBottom",
+        "marginLeft",
+        "background",
+        "backgroundColor",
+        "border",
+        "borderColor",
+        "borderWidth",
+        "borderStyle",
+        "borderRadius",
+        "width",
+        "maxWidth",
+        "minHeight",
+        "boxShadow",
+        "overflow",
+        "justifyContent",
+        "alignItems"
+      ]
+    },
+    "Link": {
+      "props": {
+        "href": "https://example.com",
+        "label": "Baca Syarat & Ketentuan",
+        "target": "_blank",
+        "rel": "noopener noreferrer"
+      },
+      "style": [
+        "color",
+        "fontSize",
+        "fontWeight",
+        "lineHeight",
+        "letterSpacing",
+        "textAlign",
+        "textDecoration",
+        "margin",
+        "marginTop",
+        "marginRight",
+        "marginBottom",
+        "marginLeft",
+        "padding",
+        "opacity",
+        "cursor",
+        "background",
+        "backgroundColor"
+      ]
+    }
+  }
+}

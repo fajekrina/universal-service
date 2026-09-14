@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sdui.demo/universal-schema.json",
+  "title": "Universal PageConfig",
+  "type": "object",
+  "required": ["pageId", "pageKey", "merchantId", "status", "layout"],
+  "properties": {
+    "pageId": { "type": "string", "minLength": 1 },
+    "pageKey": { "type": "string", "minLength": 1, "pattern": "^[a-zA-Z0-9_-]+$" },
+    "merchantId": { "type": "string", "minLength": 1 },
+    "status": { "type": "string", "enum": ["DRAFT", "PUBLISHED", "ARCHIVED"] },
+    "version": { "type": "integer", "minimum": 1 },
+    "createdAt": { "type": "string" },
+    "updatedAt": { "type": "string" },
+    "layout": {
+      "type": "object",
+      "required": ["components"],
+      "properties": {
+        "type": { "type": "string" },
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "components": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/component" }
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true,
+  "$defs": {
+    "component": {
+      "type": "object",
+      "required": ["id"],
+      "anyOf": [
+        { "required": ["type"] },
+        { "required": ["component"] }
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["Button", "Card", "Container", "Flex", "Grid", "Heading", "Image", "Text", "Form", "Input", "Select", "Divider", "Hero", "Space", "Textarea", "Link", "Toast", "Modal"]
+        },
+        "component": {
+          "type": "string",
+          "enum": ["Button", "Card", "Container", "Flex", "Grid", "Heading", "Image", "Text", "Form", "Input", "Select", "Textarea", "Link", "Divider", "Hero", "Space", "Toast", "Modal"]
+        },
+        "id": { "type": "string", "minLength": 1 },
+        "parentId": { "type": ["string", "null"] },
+        "order": { "type": "integer", "minimum": 0 },
+        "props": { "type": "object", "additionalProperties": true },
+        "style": { "type": "object", "additionalProperties": true },
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/component" }
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

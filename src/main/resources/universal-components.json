@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0",
+  "description": "Universal SDUI component registry — single source of truth for Container/Flex/Grid/Space distance and props defaults. Shared by backend validator (UniversalPageConfigService.java) + React (universal-react-renderer.html) + Vue (universal-vue-renderer.html) via universal-style-utils.js",
+  "components": {
+    "Container": {
+      "description": "Vertical stack container — children stacked with consistent gap",
+      "props": {
+        "gap": { "type": "spacingToken", "default": "lg", "description": "distance between children (token xs|sm|md|lg|xl|2xl or css value)" }
+      },
+      "render": {
+        "react": "space-y-4 (12px fallback) + style spread",
+        "vue": "vstack gap-3 (16px) + :style spread",
+        "note": "Both map to ~16px when gap=lg; inline style overrides via comp.style"
+      }
+    },
+    "Flex": {
+      "description": "Flex row/column layout",
+      "props": {
+        "direction": { "type": "string", "enum": ["row", "column"], "default": "row" },
+        "gap": { "type": "spacingToken", "default": "md", "example": "12px via md token" },
+        "justify": { "type": "string", "enum": ["start", "center", "end", "between"], "default": "start" }
+      },
+      "render": {
+        "style": "display:flex; flexDirection; gap (resolved via tokens); justifyContent; flexWrap:wrap"
+      }
+    },
+    "Grid": {
+      "description": "CSS Grid layout",
+      "props": {
+        "columns": { "type": "integer", "minimum": 1, "maximum": 12, "default": 2, "altKey": "numColumns" },
+        "gap": { "type": "spacingToken", "default": "lg", "example": "16px via lg token" }
+      },
+      "render": {
+        "style": "display:grid; gridTemplateColumns:repeat(columns,1fr); gap (resolved)"
+      }
+    },
+    "Space": {
+      "description": "Vertical spacer",
+      "props": {
+        "height": { "type": "spacingToken", "default": "md", "example": "16px" }
+      },
+      "render": {
+        "style": "height (resolved)"
+      }
+    },
+    "Heading": {
+      "props": {
+        "text": { "type": "string" },
+        "level": { "type": "integer", "minimum": 1, "maximum": 6, "default": 2 },
+        "align": { "type": "string", "enum": ["left", "center", "right"], "default": "left" }
+      }
+    },
+    "Text": {
+      "props": {
+        "text": { "type": "string" },
+        "align": { "type": "string", "enum": ["left", "center", "right"] },
+        "color": { "type": "string", "enum": ["default", "muted"] }
+      }
+    },
+    "Button": {
+      "props": {
+        "label": { "type": "string" },
+        "variant": { "type": "string", "enum": ["primary", "secondary", "outline"], "default": "primary" },
+        "size": { "type": "string", "enum": ["sm", "md", "lg"], "default": "md" },
+        "action": { "type": "string" },
+        "target": { "type": "string" }
+      }
+    },
+    "Card": {
+      "props": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "image": { "type": "string" }
+      },
+      "children": "allowed (typically Button)"
+    },
+    "Hero": {
+      "props": {
+        "title": { "type": "string" },
+        "description": { "type": "string" }
+      },
+      "children": "allowed"
+    },
+    "Image": {
+      "props": {
+        "src": { "type": "string", "required": true },
+        "alt": { "type": "string" }
+      }
+    },
+    "Divider": {
+      "props": {
+        "label": { "type": "string" }
+      }
+    },
+    "Form": {
+      "props": {
+        "title": { "type": "string" },
+        "submitLabel": { "type": "string" },
+        "action": { "type": "string" },
+        "target": { "type": "string" },
+        "fields": { "type": "array" }
+      }
+    }
+  }
+}

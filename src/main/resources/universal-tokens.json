@@ -1,0 +1,13 @@
+{
+  "version": "1.0",
+  "description": "Universal spacing tokens — single source for distance (gap/height/margin/padding) resolved identically in React and Vue via universal-style-utils.js",
+  "spacing": {
+    "xs": "4px",
+    "sm": "8px",
+    "md": "12px",
+    "lg": "16px",
+    "xl": "24px",
+    "2xl": "32px"
+  },
+  "note": "JSON may use token name (md, lg) or raw CSS value (12px, 1rem). Resolver in universal-style-utils.js maps token → px, passes raw values through."
+}

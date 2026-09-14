@@ -1,0 +1,354 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sdui.demo/static/universal/components.json",
+  "version": "2.0",
+  "description": "Universal SDUI component registry — final agreement: props hanya data fungsional (tanpa variant/size), action.behavior menggantikan action.kind (navigate, submit, openModal, closeModal, externalLink, back, toast, customEvent), Form tanpa successAction/failureAction. Style hanya properti CSS valid per komponen. Dipakai validator backend + visual builder + renderer (React/Vue).",
+  "components": {
+    "Container": {
+      "props": {
+        "as": ["div", "section", "article", "aside"]
+      },
+      "style": [
+        "display",
+        "flexDirection",
+        "flexWrap",
+        "justifyContent",
+        "alignItems",
+        "gap",
+        "gridTemplateColumns",
+        "gridGap",
+        "padding",
+        "paddingTop",
+        "paddingRight",
+        "paddingBottom",
+        "paddingLeft",
+        "margin",
+        "marginTop",
+        "marginRight",
+        "marginBottom",
+        "marginLeft",
+        "background",
+        "backgroundColor",
+        "border",
+        "borderColor",
+        "borderWidth",
+        "borderStyle",
+        "borderRadius",
+        "width",
+        "height",
+        "maxWidth",
+        "minHeight",
+        "overflow",
+        "boxShadow"
+      ]
+    },
+    "Text": {
+      "props": {
+        "content": "Selamat datang",
+        "tag": ["p", "span", "label"]
+      },
+      "style": [
+        "color",
+        "fontSize",
+        "fontWeight",
+        "lineHeight",
+        "letterSpacing",
+        "textAlign",
+        "margin",
+        "marginTop",
+        "marginRight",
+        "marginBottom",
+        "marginLeft",
+        "padding",
+        "paddingTop",
+        "paddingRight",
+        "paddingBottom",
+        "paddingLeft",
+        "background",
+        "backgroundColor",
+        "opacity",
+        "maxWidth",
+        "overflow"
+      ]
+    },
+    "Heading": {
+      "props": {
+        "content": "Pilih Kursi",
+        "level": [1,2,3,4,5,6]
+      },
+      "style": [
+        "color",
+        "fontSize",
+        "fontWeight",
+        "lineHeight",
+        "letterSpacing",
+        "textAlign",
+        "margin",
+        "marginTop",
+        "marginRight",
+        "marginBottom",
+        "marginLeft",
+        "padding",
+        "background",
+        "backgroundColor",
+        "opacity",
+        "maxWidth"
+      ]
+    },
+    "Button": {
+      "props": {
+        "label": "Kirim",
+        "type": ["button", "reset", "submit"],
+        "disabled": [true, false]
+      },
+      "action": {
+        "behavior" : [
+          "navigate",
+          "openModal",
+          "closeModal",
+          "externalLink",
+          "back",
+          "toast"
+        ]
+      },
+      "style": [
+        "background",
+        "backgroundColor",
+        "color",
+        "border",
+        "borderColor",
+        "borderWidth",
+        "borderStyle",
+        "borderRadius",
+        "padding",
+        "paddingTop",
+        "paddingRight",
+        "paddingBottom",
+        "paddingLeft",
+        "margin",
+        "marginTop",
+        "marginRight",
+        "marginBottom",
+        "marginLeft",
+        "fontSize",
+        "fontWeight",
+        "lineHeight",
+        "textAlign",
+        "width",
+        "height",
+        "display",
+        "justifyContent",
+        "alignItems",
+        "gap",
+        "opacity",
+        "boxShadow",
+        "cursor",
+        "overflow"
+      ]
+    },
+    "Image": {
+      "props": {
+        "src": "/poster.jpg",
+        "alt": "Poster Konser",
+        "loading": "lazy"
+      },
+      "style": [
+        "width",
+        "height",
+        "maxWidth",
+        "maxHeight",
+        "minWidth",
+        "minHeight",
+        "objectFit",
+        "borderRadius",
+        "border",
+        "borderColor",
+        "borderWidth",
+        "borderStyle",
+        "margin",
+        "marginTop",
+        "marginRight",
+        "marginBottom",
+        "marginLeft",
+        "padding",
+        "display",
+        "opacity",
+        "boxShadow",
+        "overflow",
+        "background",
+        "backgroundColor"
+      ]
+    },
+    "Input": {
+      "props": {
+        "type": ["text", "password", "email", "number", "checkbox", "radio", "date", "tel", "url", "time"],
+        "name": "fullName",
+        "placeholder": "Masukkan nama lengkap",
+        "required": true,
+        "label": "Nama Lengkap",
+        "min" : 17,
+        "max" : 99,
+        "minLength": 8,
+        "validation": [{ "rule": "email", "message": "Email tidak valid" }]
+      },
+      "style": [
+        "background",
+        "backgroundColor",
+        "color",
+        "border",
+        "borderColor",
+        "borderWidth",
+        "borderStyle",
+        "borderRadius",
+        "padding",
+        "paddingTop",
+        "paddingRight",
+        "paddingBottom",
+        "paddingLeft",
+        "margin",
+        "marginTop",
+        "marginRight",
+        "marginBottom",
+        "marginLeft",
+        "fontSize",
+        "fontWeight",
+        "lineHeight",
+        "width",
+        "height",
+        "display",
+        "boxShadow",
+        "opacity",
+        "textAlign"
+      ]
+    },
+    "Select": {
+      "props": {
+        "name": "payment_method",
+        "options": [
+          { "value": "card", "label": "Kartu Kredit" },
+          { "value": "bank", "label": "Transfer Bank" },
+          { "value": "ewallet", "label": "E-Wallet" }
+        ],
+        "placeholder": "Pilih metode pembayaran",
+        "required": true
+      },
+      "style": [
+        "background",
+        "backgroundColor",
+        "color",
+        "border",
+        "borderColor",
+        "borderWidth",
+        "borderStyle",
+        "borderRadius",
+        "padding",
+        "margin",
+        "fontSize",
+        "fontWeight",
+        "width",
+        "height",
+        "display",
+        "boxShadow",
+        "opacity",
+        "textAlign"
+      ]
+    },
+    "Textarea": {
+      "description": "Area teks multi-baris.",
+      "props": {
+        "name": "notes",
+        "placeholder": "Catatan tambahan",
+        "rows": 4
+      },
+      "style": [
+        "background",
+        "backgroundColor",
+        "color",
+        "border",
+        "borderColor",
+        "borderWidth",
+        "borderStyle",
+        "borderRadius",
+        "padding",
+        "margin",
+        "fontSize",
+        "fontWeight",
+        "lineHeight",
+        "width",
+        "height",
+        "display",
+        "boxShadow",
+        "opacity",
+        "textAlign",
+        "overflow"
+      ]
+    },
+    "Form": {
+      "props": {
+        "action": "/api/payment",
+        "method": "POST",
+        "enctype": "application/json",
+        "submitLabel": "Bayar Sekarang",
+        "resetLabel": "Reset",
+        "showReset": false,
+        "validateOnSubmit": true
+      },
+      "style": [
+        "display",
+        "flexDirection",
+        "gap",
+        "padding",
+        "paddingTop",
+        "paddingRight",
+        "paddingBottom",
+        "paddingLeft",
+        "margin",
+        "marginTop",
+        "marginRight",
+        "marginBottom",
+        "marginLeft",
+        "background",
+        "backgroundColor",
+        "border",
+        "borderColor",
+        "borderWidth",
+        "borderStyle",
+        "borderRadius",
+        "width",
+        "maxWidth",
+        "minHeight",
+        "boxShadow",
+        "overflow",
+        "justifyContent",
+        "alignItems"
+      ]
+    },
+    "Link": {
+      "props": {
+        "href": "https://example.com",
+        "label": "Baca Syarat & Ketentuan",
+        "target": "_blank",
+        "rel": "noopener noreferrer"
+      },
+      "style": [
+        "color",
+        "fontSize",
+        "fontWeight",
+        "lineHeight",
+        "letterSpacing",
+        "textAlign",
+        "textDecoration",
+        "margin",
+        "marginTop",
+        "marginRight",
+        "marginBottom",
+        "marginLeft",
+        "padding",
+        "opacity",
+        "cursor",
+        "background",
+        "backgroundColor"
+      ]
+    }
+  }
+}
