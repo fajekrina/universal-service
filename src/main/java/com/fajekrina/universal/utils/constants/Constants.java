@@ -25,4 +25,14 @@ public class Constants {
     public static final String MSG_PAGE_ARCHIVED = "Universal page archived";
     public static final String MSG_POLICY_SAVED = "Universal policy saved";
     public static final String SOURCE_UNIVERSAL = "universal";
+    public static final String MSG_SCREEN_SAVED = "Screen saved";
+    public static final String MSG_SCREEN_UNCHANGED = "Screen unchanged";
+    public static final String MSG_SCREEN_PUBLISHED = "Screen published";
+    public static final String MSG_SCREEN_ALREADY_PUBLISHED = "Screen already published";
+    /** audit_log.page_id of a spec screen */
+    public static final String SCREEN_AUDIT_PREFIX = "screen:";
+    /** manifest version of a screen release: "v" + sequence */
+    public static final String SCREEN_VERSION_PREFIX = "v";
+    /** schemaVersion of the manifest envelope (the spec the client speaks) */
+    public static final String SPEC_SCHEMA_VERSION = "1.1";
 }

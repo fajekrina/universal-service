@@ -24,6 +24,9 @@ public enum UniversalFault {
     POLICY_NOT_FOUND("Merchant has no policy", 14, HttpStatus.INTERNAL_SERVER_ERROR),
     ACTION_REQUIRED("action is required", 15, HttpStatus.BAD_REQUEST),
     INTEGRITY_VIOLATION("Data integrity violation", 16, HttpStatus.CONFLICT),
+    SCREEN_NOT_FOUND("Screen not found", 17, HttpStatus.NOT_FOUND),
+    PUBLISHED_SCREEN_NOT_FOUND("Published screen not found", 18, HttpStatus.NOT_FOUND),
+    INVALID_SCREEN("Invalid spec screen payload", 19, HttpStatus.BAD_REQUEST),
     BAD_REQUEST("Invalid or malformed request", 98, HttpStatus.BAD_REQUEST),
     GENERAL_ERROR("Unexpected error", 99, HttpStatus.INTERNAL_SERVER_ERROR);
 

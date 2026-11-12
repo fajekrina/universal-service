@@ -214,3 +214,25 @@ kedua demo sudah disesuaikan.
 3. Endpoint rotasi signing key; status RETIRED/REVOKED dihormati client.
 4. Unit test Mockito untuk service yang belum punya (SaveStyle, SetPageStyle, ListReleases, …) — saat ini tercakup tes integrasi.
 5. Bila produksi: PostgreSQL + jsonb sesuai `packages/sdui/docs/DESAIN-SISTEM-SDUI.md` §4.
+
+## 10. Spec screens (branch `feat/spec-screens-demo`)
+Payload format `@fajekrina/sdui` (`{schemaVersion, screen}`) disimpan sebagai **satu dokumen per screen**,
+divalidasi dengan `sdui-spec.schema.json` (salinan `packages/sdui/spec/sdui.schema.json`), dirilis immutable, dan
+didaftarkan di manifest. API A1 (`client/page`, `merchant/pages`) tetap ada untuk klien sdui 0.3.x.
+
+| Endpoint (base `/api/universal/v1`) | Fungsi |
+|---|---|
+| `GET merchant/screens/{mid}` | daftar screen + status, sequence aktif, `lockVersion` |
+| `GET merchant/screens/{mid}/{key}` | draft (`payload`) + `lockVersion` |
+| `POST merchant/screens/{mid}/{key}` `{payload, lockVersion?}` | simpan draft (no-op bila sama; lock usang → 409 SDUI-004; invalid → 400 SDUI-019) |
+| `POST merchant/screens/{mid}/{key}/publish` | release `sequence+1` (+ signature bila signing aktif); mengembalikan `lockVersion` baru |
+| `GET client/screen/{mid}/{key}[?signed=true]` | bytes release aktif, ETag/304, atau envelope Ed25519 |
+| `GET client/manifest/{mid}[?signed=true]` | `{sequence, screens:{key:"v<seq>"}}`; `sequence` = release id tertinggi (monoton) |
+
+Tabel: `sdui_screen` (draft, optimistic lock) dan `sdui_screen_release` (immutable via trigger) — `V4__sdui_screen.sql`.
+Seed: `data/universal/screens/merchant_demo/{home,seatSelection,checkout}.json` (save + publish saat tabel kosong).
+
+**Demo:** jalankan service ini di 8080 (`./gradlew bootRun`), lalu `npm run dev` di `react-tailwind` (5173) dan/atau
+`vue-bootstrap` (5174). Klien: `/merchant_demo/home` → pilih kursi → checkout. Builder: `/admin/builder` →
+edit → Publish → buka "Lihat di klien". Restart run IntelliJ yang masih memakai kode lama: V4 diterapkan ke `data/h2`
+saat start (hanya menambah tabel).

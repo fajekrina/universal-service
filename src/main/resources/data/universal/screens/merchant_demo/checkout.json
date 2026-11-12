@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "1.1",
+  "screen": {
+    "key": "checkout",
+    "root": {
+      "type": "vstack",
+      "props": { "spacing": 16, "padding": 24, "alignment": "leading" },
+      "children": [
+        { "type": "text", "props": { "value": "Checkout", "style": "title", "weight": "bold" } },
+        { "type": "text", "props": { "value": "Kursi {{seatId}} • {{eventId}}", "style": "body", "color": "muted" } },
+        {
+          "type": "card",
+          "props": { "padding": 16 },
+          "children": [
+            {
+              "type": "form",
+              "props": { "spacing": 12 },
+              "children": [
+                { "type": "textField", "props": { "name": "name", "label": "Nama Lengkap", "placeholder": "Nama sesuai KTP", "required": true, "minLength": 3 } },
+                { "type": "textField", "props": { "name": "email", "label": "Email", "keyboard": "email", "pattern": "email", "required": true } },
+                { "type": "textField", "props": { "name": "phone", "label": "No. Telepon", "keyboard": "phone", "pattern": "phoneId", "required": true } },
+                { "type": "picker", "props": { "name": "paymentMethod", "label": "Metode Pembayaran", "required": true, "options": [ { "value": "va", "label": "Virtual Account" }, { "value": "ewallet", "label": "E-Wallet" }, { "value": "card", "label": "Kartu Kredit" } ] } },
+                { "type": "textArea", "props": { "name": "notes", "label": "Catatan", "rows": 3, "maxLength": 140 } },
+                {
+                  "type": "button",
+                  "props": { "title": "Bayar Sekarang", "variant": "primary" },
+                  "action": {
+                    "type": "api",
+                    "request": "submitCheckout",
+                    "params": {
+                      "action": "CHECKOUT",
+                      "data": { "seatId": "{{seatId}}", "eventId": "{{eventId}}", "name": "{{form.name}}", "email": "{{form.email}}", "phone": "{{form.phone}}", "paymentMethod": "{{form.paymentMethod}}", "notes": "{{form.notes}}" }
+                    },
+                    "onSuccess": { "type": "toast", "message": "Pembayaran untuk kursi {{seatId}} berhasil", "level": "success", "onSuccess": { "type": "navigate", "screen": "home" } },
+                    "onError": { "type": "toast", "message": "Pembayaran gagal, coba lagi", "level": "error" }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "button", "props": { "title": "Kembali", "variant": "plain" }, "action": { "type": "dismiss" } }
+      ]
+    }
+  }
+}

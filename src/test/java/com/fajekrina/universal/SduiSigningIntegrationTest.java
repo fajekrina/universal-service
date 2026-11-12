@@ -1,5 +1,6 @@
 package com.fajekrina.universal;
 
+import com.fajekrina.universal.controller.ScreenClientController;
 import com.fajekrina.universal.controller.UniversalClientController;
 import com.fajekrina.universal.model.response.PublishedPageResponse;
 import com.fajekrina.universal.service.SignatureService;
@@ -55,5 +56,21 @@ class SduiSigningIntegrationTest {
         // the signed bytes are exactly the served bytes: their hash is the ETag
         assertThat("\"" + CanonicalJson.sha256Hex(payload) + "\"").isEqualTo(res.getHeaders().getETag());
         assertThat(new ObjectMapper().readTree(payload).get("pageKey").asText()).isEqualTo("home");
+    }
+
+    @Autowired ScreenClientController screens;
+
+    @Test
+    void specScreenAndManifestEnvelopesVerify() throws Exception {
+        byte[] rawPub = Base64.getDecoder().decode(client.getSigningKeys().keys().get(0).publicKey());
+        for (ResponseEntity<Object> res : new ResponseEntity[] {
+                screens.getScreen("merchant_demo", "home", true, null), screens.getManifest("merchant_demo", true, null) }) {
+            var env = (PublishedPageResponse.SignedEnvelope) res.getBody();
+            assertThat(env.alg()).isEqualTo("ed25519");
+            assertThat(env.schemaVersion()).isEqualTo("1.1");
+            byte[] payload = Base64.getDecoder().decode(env.payload());
+            assertThat(SignatureService.verify(rawPub, payload, Base64.getDecoder().decode(env.signature()))).isTrue();
+            assertThat("\"" + CanonicalJson.sha256Hex(payload) + "\"").isEqualTo(res.getHeaders().getETag());
+        }
     }
 }

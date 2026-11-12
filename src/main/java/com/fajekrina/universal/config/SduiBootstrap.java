@@ -5,11 +5,16 @@ import com.fajekrina.universal.model.entity.SduiSigningKey;
 import com.fajekrina.universal.model.request.PageKeyRequestBuilder;
 import com.fajekrina.universal.model.request.SaveDraftPageRequestBuilder;
 import com.fajekrina.universal.model.request.SavePolicyRequestBuilder;
+import com.fajekrina.universal.model.request.SaveScreenRequestBuilder;
+import com.fajekrina.universal.model.request.ScreenKeyRequestBuilder;
 import com.fajekrina.universal.repository.SduiPageRepository;
 import com.fajekrina.universal.repository.SduiPolicyRepository;
+import com.fajekrina.universal.repository.SduiScreenRepository;
 import com.fajekrina.universal.repository.SduiSigningKeyRepository;
 import com.fajekrina.universal.service.PublishPageService;
+import com.fajekrina.universal.service.PublishScreenService;
 import com.fajekrina.universal.service.SaveDraftPageService;
+import com.fajekrina.universal.service.SaveScreenDraftService;
 import com.fajekrina.universal.service.SavePolicyService;
 import com.fajekrina.universal.service.SignatureService;
 import com.fajekrina.universal.utils.constants.Constants;
@@ -33,7 +38,8 @@ import java.util.Map;
  * Startup:
  *  1. registers the configured Ed25519 public key in sdui_signing_key (if signing is on);
  *  2. seeds an EMPTY database from classpath data/universal/{policies,pages} — save + publish,
- *     exactly like the builder would (actor "seed").
+ *     exactly like the builder would (actor "seed");
+ *  3. seeds spec screens from classpath data/universal/screens/{merchantId}/*.json the same way.
  */
 @Log4j2
 @Component
@@ -47,6 +53,9 @@ public class SduiBootstrap implements ApplicationRunner {
     private final PublishPageService publishPageService;
     private final SavePolicyService savePolicyService;
     private final SignatureService signatureService;
+    private final SduiScreenRepository screenRepository;
+    private final SaveScreenDraftService saveScreenDraftService;
+    private final PublishScreenService publishScreenService;
     private final SeedProperties seedProperties;
     private final ObjectMapper objectMapper;
 
@@ -58,6 +67,34 @@ public class SduiBootstrap implements ApplicationRunner {
                 seed();
                 return null;
             });
+        }
+        if (seedProperties.enabled() && screenRepository.count() == 0) {
+            ActorContext.runAs(Constants.SEED_ACTOR, () -> {
+                seedScreens();
+                return null;
+            });
+        }
+    }
+
+    /** Spec screens: classpath data/universal/screens/{merchantId}/*.json — save + publish, like the builder. */
+    private void seedScreens() {
+        try {
+            var resolver = new PathMatchingResourcePatternResolver();
+            Resource[] screens = resolver.getResources("classpath*:data/universal/screens/*/*.json");
+            Arrays.sort(screens, Comparator.comparing(Resource::getDescription, Comparator.nullsLast(String::compareTo)));
+            for (Resource r : screens) {
+                String[] parts = r.getURL().getPath().split("/");
+                String merchantId = parts[parts.length - 2];
+                Map<String, Object> payload = read(r, new TypeReference<>() {});
+                @SuppressWarnings("unchecked")
+                String screenKey = String.valueOf(((Map<String, Object>) payload.get("screen")).get("key"));
+                saveScreenDraftService.execute(SaveScreenRequestBuilder.builder()
+                        .merchantId(merchantId).screenKey(screenKey).payload(payload).build());
+                publishScreenService.execute(ScreenKeyRequestBuilder.builder().merchantId(merchantId).screenKey(screenKey).build());
+                log.info("SDUI seeded screen {}/{}", merchantId, screenKey);
+            }
+        } catch (IOException e) {
+            throw new IllegalStateException("SDUI screen seed failed", e);
         }
     }
 

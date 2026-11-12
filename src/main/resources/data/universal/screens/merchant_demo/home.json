@@ -1,0 +1,93 @@
+{
+  "schemaVersion": "1.1",
+  "screen": {
+    "key": "home",
+    "root": {
+      "type": "vstack",
+      "props": { "spacing": 24, "padding": 24, "alignment": "leading" },
+      "children": [
+        {
+          "type": "card",
+          "props": { "padding": 24, "background": "surface", "cornerRadius": 16 },
+          "children": [
+            {
+              "type": "vstack",
+              "props": { "spacing": 12, "alignment": "leading" },
+              "children": [
+                { "type": "text", "props": { "value": "Selamat Datang di Universal SDUI", "style": "title", "weight": "bold" } },
+                { "type": "text", "props": { "value": "Satu JSON untuk semua platform — edit sekali di builder, tampil sama di React, Vue, dan WebView.", "style": "body", "color": "muted" } },
+                { "type": "button", "props": { "title": "Pilih Kursi Sekarang", "variant": "primary" }, "action": { "type": "navigate", "screen": "seatSelection", "params": { "eventId": "event-jazz-01" } } }
+              ]
+            }
+          ]
+        },
+        { "type": "text", "props": { "value": "Event pilihan", "style": "headline", "weight": "semibold" } },
+        {
+          "type": "grid",
+          "props": { "columns": 3, "spacing": 16 },
+          "children": [
+            {
+              "type": "card",
+              "props": { "padding": 12 },
+              "children": [
+                {
+                  "type": "vstack",
+                  "props": { "spacing": 8, "alignment": "leading" },
+                  "children": [
+                    { "type": "image", "props": { "name": "event-jazz-01", "contentMode": "fill", "height": 140 } },
+                    { "type": "text", "props": { "value": "Jazz Night Festival", "style": "headline" } },
+                    { "type": "text", "props": { "value": "18 Okt 2026 • 20:00 WIB • Balai Sarbini", "style": "caption", "color": "muted" } },
+                    { "type": "button", "props": { "title": "Lihat Detail", "variant": "secondary" }, "action": { "type": "navigate", "screen": "seatSelection", "params": { "eventId": "event-jazz-01" } } }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "card",
+              "props": { "padding": 12 },
+              "children": [
+                {
+                  "type": "vstack",
+                  "props": { "spacing": 8, "alignment": "leading" },
+                  "children": [
+                    { "type": "image", "props": { "name": "event-rock-02", "contentMode": "fill", "height": 140 } },
+                    { "type": "text", "props": { "value": "Rock Revival Concert", "style": "headline" } },
+                    { "type": "text", "props": { "value": "25 Okt 2026 • 19:30 WIB • Istora Senayan", "style": "caption", "color": "muted" } },
+                    { "type": "button", "props": { "title": "Lihat Detail", "variant": "secondary" }, "action": { "type": "navigate", "screen": "seatSelection", "params": { "eventId": "event-rock-02" } } }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "card",
+              "props": { "padding": 12 },
+              "children": [
+                {
+                  "type": "vstack",
+                  "props": { "spacing": 8, "alignment": "leading" },
+                  "children": [
+                    { "type": "image", "props": { "name": "event-orchestra-03", "contentMode": "fill", "height": 140 } },
+                    { "type": "text", "props": { "value": "Orchestra Under Stars", "style": "headline" } },
+                    { "type": "text", "props": { "value": "02 Nov 2026 • 19:00 WIB • Taman Ismail Marzuki", "style": "caption", "color": "muted" } },
+                    { "type": "button", "props": { "title": "Lihat Detail", "variant": "secondary" }, "action": { "type": "navigate", "screen": "seatSelection", "params": { "eventId": "event-orchestra-03" } } }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "divider" },
+        {
+          "type": "hstack",
+          "props": { "spacing": 12, "alignment": "center" },
+          "children": [
+            { "type": "text", "props": { "value": "© 2026 Universal SDUI Demo", "style": "caption", "color": "muted" } },
+            { "type": "button", "props": { "title": "Kebijakan Privasi", "variant": "plain" }, "action": { "type": "openURL", "link": "privacyPolicy" } },
+            { "type": "button", "props": { "title": "Syarat & Ketentuan", "variant": "plain" }, "action": { "type": "openURL", "link": "terms" } },
+            { "type": "button", "props": { "title": "Hubungi Kami", "variant": "plain" }, "action": { "type": "openURL", "link": "contactSupport" } }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.1",
+  "screen": {
+    "key": "seatSelection",
+    "root": {
+      "type": "vstack",
+      "props": { "spacing": 16, "padding": 24, "alignment": "leading" },
+      "children": [
+        { "type": "text", "props": { "value": "Pilih Kursi Kamu", "style": "title", "weight": "bold" } },
+        { "type": "text", "props": { "value": "Event {{eventId}} — tap kursi untuk melanjutkan ke checkout.", "style": "body", "color": "muted" } },
+        {
+          "type": "grid",
+          "props": { "columns": 3, "spacing": 8 },
+          "children": [
+            { "type": "button", "props": { "title": "A1", "variant": "secondary" }, "action": { "type": "navigate", "screen": "checkout", "params": { "seatId": "A1", "eventId": "{{eventId}}" } } },
+            { "type": "button", "props": { "title": "A2", "variant": "secondary" }, "action": { "type": "navigate", "screen": "checkout", "params": { "seatId": "A2", "eventId": "{{eventId}}" } } },
+            { "type": "button", "props": { "title": "A3", "variant": "secondary" }, "action": { "type": "navigate", "screen": "checkout", "params": { "seatId": "A3", "eventId": "{{eventId}}" } } },
+            { "type": "button", "props": { "title": "B1", "variant": "secondary" }, "action": { "type": "navigate", "screen": "checkout", "params": { "seatId": "B1", "eventId": "{{eventId}}" } } },
+            { "type": "button", "props": { "title": "B2", "variant": "secondary" }, "action": { "type": "navigate", "screen": "checkout", "params": { "seatId": "B2", "eventId": "{{eventId}}" } } },
+            { "type": "button", "props": { "title": "B3", "variant": "secondary" }, "action": { "type": "navigate", "screen": "checkout", "params": { "seatId": "B3", "eventId": "{{eventId}}" } } },
+            { "type": "button", "props": { "title": "C1", "variant": "secondary" }, "action": { "type": "navigate", "screen": "checkout", "params": { "seatId": "C1", "eventId": "{{eventId}}" } } },
+            { "type": "button", "props": { "title": "C2", "variant": "secondary" }, "action": { "type": "navigate", "screen": "checkout", "params": { "seatId": "C2", "eventId": "{{eventId}}" } } },
+            { "type": "button", "props": { "title": "C3", "variant": "secondary" }, "action": { "type": "navigate", "screen": "checkout", "params": { "seatId": "C3", "eventId": "{{eventId}}" } } }
+          ]
+        },
+        { "type": "button", "props": { "title": "Kembali", "variant": "plain" }, "action": { "type": "dismiss" } }
+      ]
+    }
+  }
+}
