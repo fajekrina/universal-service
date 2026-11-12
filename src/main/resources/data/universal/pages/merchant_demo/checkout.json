@@ -3,6 +3,7 @@
   "pageKey": "checkout",
   "merchantId": "merchant_demo",
   "status": "PUBLISHED",
+  "schemaVersion": "1.0",
   "version": 1,
   "createdAt": "2026-09-08T00:00:00",
   "updatedAt": "2026-09-08T00:00:00",
@@ -65,7 +66,12 @@
         "component": "Form",
         "parentId": "01JQ2D7KX8WBHKC7ZT2V625EPT",
         "props": {
-          "action": "/api/payment",
+          "action": {
+            "behavior": "submit",
+            "params": {
+              "target": "home"
+            }
+          },
           "method": "POST",
           "enctype": "application/json"
         },

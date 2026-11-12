@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: universal-service
+  datasource:
+    # H2 file DB (survives restarts) — ./data/h2/sdui.mv.db; AUTO_SERVER lets the IDE connect while the app runs
+    url: jdbc:h2:file:./data/h2/sdui;AUTO_SERVER=TRUE
+    username: sa
+    password: ""
+    driver-class-name: org.h2.Driver
+  flyway:
+    # Flyway owns the schema (db/migration); Hibernate never generates DDL
+    enabled: true
+    locations: classpath:db/migration
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+sdui:
+  seed:
+    # seed an EMPTY database from classpath data/universal/{policies,pages} (save + publish)
+    enabled: true
+  signing:
+    # optional Ed25519 signing (signed envelopes + /signing-keys); set both key files to enable
+    enabled: false
+    private-key-file: ""
+    public-key-file: ""

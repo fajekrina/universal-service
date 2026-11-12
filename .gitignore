@@ -2,3 +2,5 @@
 /.gradle/
 /build/
 /build/classes/java/main/
+# H2 runtime database (recreated + seeded on startup)
+/data/h2/

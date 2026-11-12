@@ -1,0 +1,6 @@
+{
+  "merchantId": "merchant_demo",
+  "policyVersion": "1",
+  "allowedDomains": ["example.com", "cdn.example.com"],
+  "allowedEvents": []
+}
