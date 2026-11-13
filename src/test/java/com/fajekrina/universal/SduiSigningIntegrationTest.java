@@ -64,7 +64,10 @@ class SduiSigningIntegrationTest {
     void specScreenAndManifestEnvelopesVerify() throws Exception {
         byte[] rawPub = Base64.getDecoder().decode(client.getSigningKeys().keys().get(0).publicKey());
         for (ResponseEntity<Object> res : new ResponseEntity[] {
-                screens.getScreen("merchant_demo", "home", true, null), screens.getManifest("merchant_demo", true, null) }) {
+                screens.getScreen("merchant_demo", "home", true, null), screens.getManifest("merchant_demo", true, null),
+                // signing enabled + no ?signed → envelopes by default (what specScreenProvider fetches)
+                screens.getScreen("merchant_demo", "home", null, null), screens.getManifest("merchant_demo", null, null),
+                screens.getScreenVersion("merchant_demo", "home", 1, null, null) }) {
             var env = (PublishedPageResponse.SignedEnvelope) res.getBody();
             assertThat(env.alg()).isEqualTo("ed25519");
             assertThat(env.schemaVersion()).isEqualTo("1.1");

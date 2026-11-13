@@ -14,6 +14,8 @@ public interface SduiScreenReleaseRepository extends JpaRepository<SduiScreenRel
 
     Optional<SduiScreenRelease> findFirstByMerchantIdAndScreenKeyOrderBySequenceDesc(String merchantId, String screenKey);
 
+    Optional<SduiScreenRelease> findByMerchantIdAndScreenKeyAndSequence(String merchantId, String screenKey, Integer sequence);
+
     /** Highest release id of a merchant: the manifest sequence (monotonic, never reused). */
     @Query("select max(r.releaseId) from SduiScreenRelease r where r.merchantId = :merchantId")
     Optional<Long> maxReleaseId(@Param("merchantId") String merchantId);

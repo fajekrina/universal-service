@@ -15,7 +15,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/** Client read of a spec screen: the active release's frozen bytes (ETag), or its signed envelope. */
+/**
+ * Client read of a spec screen: the active release (or, with {@code sequence}, one specific immutable
+ * release — the manifest version {@code v<sequence>}) as frozen bytes (ETag) or its signed envelope.
+ */
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -30,9 +33,11 @@ public class GetPublishedScreenService {
         UniversalException notFound = new UniversalException(UniversalFault.PUBLISHED_SCREEN_NOT_FOUND,
                 "Published screen not found: " + request.screenKey());
         if (!merchantRepository.existsByMerchantIdAndStatus(request.merchantId(), Constants.MERCHANT_ACTIVE)) throw notFound;
-        SduiScreenRelease release = screenRepository.findByMerchantIdAndScreenKey(request.merchantId(), request.screenKey())
-                .filter(s -> s.getStatus() != PageStatus.ARCHIVED && s.getActiveReleaseId() != null)
-                .flatMap(s -> releaseRepository.findById(s.getActiveReleaseId()))
+        SduiScreenRelease release = (request.sequence() != null
+                ? releaseRepository.findByMerchantIdAndScreenKeyAndSequence(request.merchantId(), request.screenKey(), request.sequence())
+                : screenRepository.findByMerchantIdAndScreenKey(request.merchantId(), request.screenKey())
+                        .filter(s -> s.getStatus() != PageStatus.ARCHIVED && s.getActiveReleaseId() != null)
+                        .flatMap(s -> releaseRepository.findById(s.getActiveReleaseId())))
                 .orElseThrow(() -> notFound);
         String schemaVersion = String.valueOf(CanonicalJson.readMap(release.getPayload()).get("schemaVersion"));
         return envelopeHelperService.respond(release.getPayload(), schemaVersion, request.signed(), request.ifNoneMatch(),

@@ -215,7 +215,7 @@ kedua demo sudah disesuaikan.
 4. Unit test Mockito untuk service yang belum punya (SaveStyle, SetPageStyle, ListReleases, …) — saat ini tercakup tes integrasi.
 5. Bila produksi: PostgreSQL + jsonb sesuai `packages/sdui/docs/DESAIN-SISTEM-SDUI.md` §4.
 
-## 10. Spec screens (branch `feat/spec-screens-demo`)
+## 10. Spec screens (branch `feat/versioned-screens`)
 Payload format `@fajekrina/sdui` (`{schemaVersion, screen}`) disimpan sebagai **satu dokumen per screen**,
 divalidasi dengan `sdui-spec.schema.json` (salinan `packages/sdui/spec/sdui.schema.json`), dirilis immutable, dan
 didaftarkan di manifest. API A1 (`client/page`, `merchant/pages`) tetap ada untuk klien sdui 0.3.x.
@@ -236,3 +236,28 @@ Seed: `data/universal/screens/merchant_demo/{home,seatSelection,checkout}.json` 
 `vue-bootstrap` (5174). Klien: `/merchant_demo/home` → pilih kursi → checkout. Builder: `/admin/builder` →
 edit → Publish → buka "Lihat di klien". Restart run IntelliJ yang masih memakai kode lama: V4 diterapkan ke `data/h2`
 saat start (hanya menambah tabel).
+
+## 11. Layar berversi untuk `specScreenProvider` (branch `feat/versioned-screens`)
+
+Bagian F1 di HLD Target framework (`@fajekrina/sdui` `specScreenProvider` / `specManifestLoader`).
+
+| Endpoint | Isi | Cache |
+| --- | --- | --- |
+| `GET client/screens/{mid}/{key}/v{seq}` | Satu release immutable (versi dari manifest) | `public, max-age=31536000, immutable` + ETag |
+| `GET client/screens/{mid}/{key}` | Release aktif (fallback tanpa manifest); alias lama `client/screen/...` tetap ada | `no-cache, private` + ETag |
+| `GET client/manifest/{mid}` | Manifest `{sequence, screens}` | `no-cache, private` + ETag |
+
+`?signed` sekarang opsional di ketiganya. Bila tidak dikirim, respons ditandatangani **tepat ketika**
+`sdui.signing.enabled=true`; `?signed=false` tetap mengembalikan bytes polos. Demo dengan signing mati tidak berubah.
+
+Uji kontrak dari repo paket:
+
+```bash
+# backend dengan signing (kunci Ed25519 PEM dari openssl genpkey -algorithm ed25519)
+java -jar build/libs/universal-service-0.2.0-SNAPSHOT.jar --server.port=8091 \
+  --sdui.signing.enabled=true --sdui.signing.private-key-file=priv.pem --sdui.signing.public-key-file=pub.pem
+# di packages/sdui
+SDUI_E2E_BASE_URL=http://localhost:8091/api/universal/v1 npm run test:contract
+```
+
+`src/main/resources/sdui-spec.schema.json` disalin ulang dari paket (`screen.load` ≤ 8).

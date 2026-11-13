@@ -90,6 +90,16 @@ class SduiScreenIntegrationTest {
         var manifest = CanonicalJson.readMap((String) client.getManifest("merchant_demo", false, null).getBody());
         assertThat(((Number) manifest.get("sequence")).longValue()).isGreaterThan(before);
         assertThat(((Map<?, ?>) manifest.get("screens")).get("promo")).isEqualTo("v2");
+
+        // a manifest version addresses one immutable release, cacheable forever; older ones stay served
+        var v1 = client.getScreenVersion("merchant_demo", "promo", 1, null, null);
+        assertThat((String) v1.getBody()).contains("Promo 1");
+        assertThat(v1.getHeaders().getCacheControl()).contains("immutable").contains("public").contains("max-age=31536000");
+        assertThat((String) client.getScreenVersion("merchant_demo", "promo", 2, null, null).getBody()).contains("Promo 2");
+        assertThatThrownBy(() -> client.getScreenVersion("merchant_demo", "promo", 3, null, null))
+                .satisfies(t -> assertThat(faultOf(t)).isEqualTo(UniversalFault.PUBLISHED_SCREEN_NOT_FOUND));
+        // signing disabled + no ?signed → bare bytes (development)
+        assertThat(client.getScreen("merchant_demo", "promo", null, null).getBody()).isInstanceOf(String.class);
     }
 
     @Test
